@@ -1,0 +1,35 @@
+
+    <h1>Employee Data Entry Form</h1>
+<form #empForm="ngForm" (ngSubmit)="onSubmit(empForm)">
+    <div class="form-group">
+<label for="Empid">Enter ID:</label>
+<input type="number" class="form-control" name="Empid"  ngModel/>
+        </div>
+<br/>
+<div class="form-group">
+    <label for="Empname">Enter Employee Name:</label>
+    <input type="text" class="form-control" name="Empname"  ngModel/>
+</div>
+    <br/>
+
+    <div class="form-group">
+        <label for="EmpDesig">Enter Designation:</label>
+        <input type="text" class="form-control" name="EmpDesig"  ngModel/>
+   </div>
+
+<div>
+<label for="EmpDesig">Select Designation:</label>
+<select name="EmpDesig" id="EmpDesig">
+    <option selected="" value="">Select</option>
+    <option [ngValue]="c" *ngFor="let c of designations">{{c}}</option>
+</select>
+</div>
+
+    <br/>
+<button type="submit" class="btn btn-success">Submit</button>
+&nbsp;&nbsp;
+<button (click)="callShowData()" class="btn btn-success"> Show data</button>
+</form>
+
+
+
