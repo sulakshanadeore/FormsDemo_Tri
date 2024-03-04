@@ -1,0 +1,141 @@
+Child And Parent Communication
+Pipes
+Forms 
+-----------------------------------
+
+Child 
+Parent
+
+
+Pass the data:-- Directive----@Input and @Output
+1)From the Parent to the Child
+@Input: is used to mark a property as an input.
+@Input is used to do this.
+@Input is used to pass data from  parent to child
+
+Steps:
+2 components: App(Parent) & Student(Child)
+ PArent.ts, Parent.html,child.ts
+
+1) in app.ts:
+declare a property.
+myinputmsg:string="Hi child,I am sending you a message"
+
+
+2) in student.ts:
+Import Input in angular/core
+declare a property with @Input 
+@Input myParentsMsg:string
+ 
+Implement OnInit in student.ts
+In ngInit()
+{
+console.log(this.myParentsMsg);
+}
+3) Open app.html
+<app-student [myParentsMsg]="myinputmsg"><app-student>
+
+
+
+
+
+
+2)From the Child to the Parent:
+@Output: child to parent
+@Output myoutput:EventEmitter<string> =new EventEmitter<string>
+----------------------------------------------------------------------
+
+Pipes:
+------------------------------------------------------
+
+Forms:
+1) Template Driven Forms: create data entry forms etc, slow processing
+2) Reactive Forms: create data entry forms etc, but performance boost is available here
+
+----------------------------------------------------------------------------
+
+create a simple form:
+
+1) create a class employee: ng g class employee
+export class Employee {
+Empid:number;
+Empname:string;
+EmpDesig:string;
+
+    constructor(empid:number,empname:string,desig:string){
+     this.Empid=empid;
+     this.Empname=empname;
+     this.EmpDesig=desig;
+        
+    }
+}
+
+2) ng g c empform
+
+import { Component } from '@angular/core';
+import { Employee } from '../employee';
+
+@Component({
+  selector: 'app-emp-form',
+  templateUrl: './emp-form.component.html',
+  styleUrls: ['./emp-form.component.css']
+})
+export class EmpFormComponent {
+designations=["Manager","Clerk","HRMgr"];
+
+empObj=new Employee(10,"Abhay",this.designations[0]);
+
+submitStatus=false;
+
+onSubmit(){
+this.submitStatus=true;
+console.log(this.empObj.Empid);
+console.log(this.empObj.Empname);
+console.log(this.empObj.EmpDesig);
+
+}
+
+getData(){
+return JSON.stringify(this.empObj);
+
+}
+
+}
+
+
+
+3) emp.html
+
+    <h1>Employee Data Entry Form</h1>
+<form>
+    <div class="form-group">
+<label for="empid">Enter ID:</label>
+<input type="number" class="form-control" name="empid" id="empid" [(ngModel)]="empObj.Empid"/>
+        </div>
+<br/>
+<div class="form-group">
+    <label for="empname">Enter Employee Name:</label>
+    <input type="text" class="form-control" name="empname" id="empname" [(ngModel)]="empObj.Empname"/>
+</div>
+    <br/>
+
+    <div class="form-group">
+        <label for="empdesig">Enter Designation:</label>
+        <input type="text" class="form-control" name="empdesig" id="empdesig" [(ngModel)]="empObj.EmpDesig"/>
+
+
+    </div>
+    <br/>
+<button type="submit" class="btn btn-success" (click)="onSubmit()">Submit</button>
+</form>
+
+
+
+
+
+
+
+
+
+
+
