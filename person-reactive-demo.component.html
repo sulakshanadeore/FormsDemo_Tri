@@ -1,0 +1,62 @@
+<form [formGroup]="contactfrm"  (ngSubmit)="OnSubmit()">
+  
+
+    <p>
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" name="firstName" formControlName="firstName" >
+      </p>
+     <div *ngIf="!firstName?.valid && (firstName?.dirty || firstName?.touched)">
+<div [hidden]="!firstName.errors.required">
+FirstName is compulsory field
+</div>
+<div [hidden]="!firstName.errors.minlength">
+  FirstName minimum must be 4 characters
+  </div>
+  
+
+
+
+     </div>
+
+
+
+      <p>
+        <label for="lastname">Last Name</label>
+        <input type="text" id="lastname" name="lastname" formControlName="lastName"  >
+      </p>
+
+      <div *ngIf="!lastName?.valid && (lastName?.dirty || lastName?.touched)">
+        <div [hidden]="!lastName.errors.required">
+        LastName is compulsory field
+        </div>
+      </div>
+     
+      <p>
+        <label for="email">Email </label>
+        <input type="text" id="email" name="email" formControlName="email">
+      </p>
+     
+      <p>
+        <label for="gender">Gender</label>
+        <input type="radio" value="male" name="gender" formControlName="gender" > Male
+        <input type="radio" value="female" name="gender" formControlName="gender" > Female
+      </p>
+     
+      <p>
+        <label for="maritalStatus">Married</label>
+        <input type="checkbox" id="maritalStatus" name="maritalStatus" formControlName="maritalStatus">
+      </p>
+     
+      <select  id="country"  name="country" formControlName="country"  >
+        <option value="1">India</option>
+        <option value="2">US</option>
+       <option value="3">UK</option>
+
+      </select>
+     
+      <p>
+        <button type="submit">Submit</button>
+
+      </p>
+
+</form>

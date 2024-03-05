@@ -1,0 +1,168 @@
+
+Comparison Index	Reactive Forms					Template-driven Forms
+Setup (form model)	Reactive forms are more explicit. 		Template-driven forms are less explicit.
+		They are created in component class.(component.ts)      They are created by directives.(html)
+Data model		Structured					Unstructured
+Predictability		Synchronous					Asynchronous
+Form validation		Functions					Directives
+Mutability		Immutable					Mutable
+Scalability		Low-level API access				Abstraction on top of APIs
+
+-----------------------
+The Template-driven forms 
+
+The form is set up using ngForm directive
+controls are set up using the ngModel directive
+ngModel also provides the two-way data binding
+The Validations are configured in the template via directives.
+
+Template-driven forms are:
+
+Contains little code in the component class 
+Easier to set up
+ 
+While they are:
+
+Difficult to add controls dynamically
+Unit testing is a challenge
+--------------------------------------
+Example:
+
+In .html
+<form #contactForm="ngForm" (ngSubmit)="onSubmit(contactForm)">
+ 
+  <p>
+    <label for="firstname">First Name</label>
+    <input type="text" name="firstname" ngModel>
+  </p>
+ 
+  <p>
+    <label for="lastname">Last Name</label>
+    <input type="text" name="lastname" ngModel>
+  </p>
+ 
+  <p>
+    <label for="email">Email </label>
+    <input type="text" id="email" name="email" ngModel>
+  </p>
+ 
+  <p>
+    <label for="gender">Geneder</label>
+    <input type="radio" value="male" name="gender" ngModel> Male
+    <input type="radio" value="female" name="gender" ngModel> Female
+  </p>
+ 
+  <p>
+    <label for="isMarried">Married</label>
+    <input type="checkbox" name="isMarried" ngModel>
+  </p>
+ 
+  <select name="country" ngModel>
+    <option [ngValue]="c.id" *ngFor="let c of countryList">
+      {{c.name}}
+    </option>
+  </select>
+ 
+  <p>
+    <button type="submit">Submit</button>
+  </p>
+
+</form>
+
+In .ts
+
+import { Component } from '@angular/core';
+ 
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'Template driven forms';
+ 
+  countryList:country[] = [
+    new country("1", "India"),
+    new country('2', 'USA'),
+    new country('3', 'England')
+  ];
+}
+ 
+export class country {
+  id:string;
+  name:string;
+ 
+  constructor(id:string, name:string) {
+    this.id=id;
+    this.name=name;
+  }
+}
+---------------------------------------
+Reactive Forms:
+
+In the Reactive Forms approach,we uses FormGroup, FormControl and FormArray
+
+
+In .ts
+contactForm = new FormGroup({
+    firstname: new FormControl(),
+    lastname: new FormControl(),
+    email: new FormControl(),
+    gender: new FormControl(),
+    isMarried: new FormControl(),
+    country: new FormControl()
+  })
+
+ onSubmit() {
+    console.log(this.contactForm.value);
+  }
+
+
+
+In .html
+
+<form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+ 
+  <p>
+    <label for="firstname">First Name </label>
+    <input type="text" id="firstname" name="firstname" formControlName="firstname">
+  </p>
+ 
+  <p>
+    <label for="lastname">Last Name </label>
+    <input type="text" id="lastname" name="lastname" formControlName="lastname">
+  </p>
+ 
+  <p>
+    <label for="email">Email </label>
+    <input type="text" id="email" name="email" formControlName="email">
+  </p>
+ 
+  <p>
+    <label for="gender">Geneder </label>
+    <input type="radio" value="male" id="gender" name="gender" formControlName="gender"> Male
+    <input type="radio" value="female" id="gender" name="gender" formControlName="gender"> Female
+  </p>
+ 
+  <p>
+    <label for="isMarried">Married </label>
+    <input type="checkbox" id="isMarried" name="isMarried" formControlName="isMarried">
+  </p>
+ 
+ 
+  <p>
+    <label for="country">country </label>
+    <select id="country" name="country" formControlName="country">
+      <option value="1">India</option>
+      <option value="2">USA</option>
+      <option value="3">England</option>
+      <option value="4">Singapore</option>
+    </select>
+  </p>
+ 
+ 
+  <p>
+    <button type="submit">Submit</button>
+  </p>
+ 
+</form>
